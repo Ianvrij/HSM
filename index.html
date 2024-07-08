@@ -115,6 +115,9 @@
             transition: transform 0.3s, z-index 0.3s;
             cursor: pointer;
         }
+        .images.wallbox img {
+            height: 350px;
+        }
         .images img.no-box {
             box-shadow: none;
         }
@@ -157,7 +160,7 @@
         .footer {
             text-align: center;
             padding: 20px;
-            background: linear-gradient(to bottom, #333, #555);
+            background: linear-gradient(to bottom, #666, #888);
             margin-top: 20px;
             border-radius: 10px;
             color: #fff;
@@ -336,6 +339,11 @@
                 } else {
                     if (model === 'go' && index === images.length - 1) {
                         img.classList.add('no-box');
+                    }
+                    if (brand === 'wallbox') {
+                        imagesDiv.classList.add('wallbox');
+                    } else {
+                        imagesDiv.classList.remove('wallbox');
                     }
                     imagesDiv.appendChild(img);
                 }
