@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zaptec Go</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Product Selector</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #2c2c2c;
+            background-color: #f5f5f5;
             color: #333;
             margin: 0;
             padding: 0;
@@ -18,30 +19,57 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            padding-top: 140px;
         }
         .header {
             text-align: center;
-            position: relative;
-            margin-bottom: 40px;
-            background: linear-gradient(to right, #f5f5dc, #d2b48c);
-            padding: 40px 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #f5f5dc;
+            padding: 10px 20px;
             color: #333;
-            border-radius: 10px;
+            border-radius: 0 0 10px 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 80px;
+            transition: background 0.5s, padding 0.3s;
+            z-index: 1000;
+            height: 100px;
+        }
+        .header.scrolled {
+            background-color: rgba(245, 245, 220, 0.4);
+            backdrop-filter: blur(10px);
         }
         .header img {
+            max-height: 100%;
             max-width: 200px;
-            margin-bottom: 20px;
+            cursor: pointer;
+            transition: opacity 0.6s, transform 1.2s;
+            object-fit: contain;
         }
-        .header h1 {
-            font-size: 2.5em;
-            margin: 0;
+        .header img:hover {
+            transform: scale(1.1);
         }
         .logo {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            max-width: 200px;
+            transition: transform 1.2s, opacity 0.6s;
+        }
+        .logo.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .logo.inactive {
+            opacity: 0.5;
+            transform: translateX(0);
+        }
+        .centered {
+            transform: translateX(-50%) scale(1.2);
+        }
+        .models, .features, .images, .large-image-container, .footer {
+            display: none;
         }
         .features {
             display: grid;
@@ -56,16 +84,21 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
             transition: transform 0.3s;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
         .feature:hover {
             transform: translateY(-10px);
         }
         .feature img {
-            max-width: 100px;
+            max-width: 80px;
             margin-bottom: 10px;
         }
         .feature p {
-            font-size: 18px;
+            font-size: 16px;
         }
         .images {
             display: grid;
@@ -79,10 +112,11 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             object-fit: cover;
-            transition: transform 0.3s;
+            transition: transform 0.3s, z-index 0.3s;
+            cursor: pointer;
         }
-        .images img:hover {
-            transform: scale(1.05);
+        .images img.no-box {
+            box-shadow: none;
         }
         .large-image-container {
             display: flex;
@@ -95,10 +129,8 @@
             object-fit: cover;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
-        }
-        .large-image:hover {
-            transform: scale(1.05);
+            transition: transform 0.3s, z-index 0.3s;
+            cursor: pointer;
         }
         .product-info {
             background: #fff;
@@ -153,15 +185,204 @@
         .btn:hover {
             background: #005bb5;
         }
+        .models {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .models button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            background: #0070f3;
+            color: white;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .models button:hover {
+            background: #005bb5;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        .enlarged {
+            transform: scale(2);
+            z-index: 10;
+        }
     </style>
+    <script>
+        const imagesData = {
+            zaptec: {
+                go: [
+                    "Ez9k_w_XIAAIWVP.png",
+                    "SHOT_090_STILL_WIDE_WOOD_ONLY-1.jpg",
+                    "Zaptec_2022-14-scaled.jpg",
+                    "Zaptec_2023_by Marthe Thu-49.jpg",
+                    "Screenshot 2024-07-03 215429.png"
+                ],
+                pro: [
+                    "zaptec-pro-beton-1x.jpg",
+                    "Zaptec-Pro-environment.webp",
+                    "3.jpg"
+                ]
+            },
+            wallbox: {
+                default: [
+                    "Wallbox-pulsar-plus-max.jpg",
+                    "0011041_wallbox-pulsar-max.webp",
+                    "IMG_7385.jpg.webp"
+                ]
+            },
+            alfen: {
+                sline: [
+                    "Alfen Eve Single S-Line.jpeg",
+                    "HENK-SCHOLTEN-MOBILITY-69_2.jpg.webp",
+                    "IMG_7223.jpg.webp"
+                ],
+                proline: [
+                    "volvo-scholten-189.jpg.webp",
+                    "Oplaadpunten Eve Single Pro Alfen wit thuis zoom_.jpg",
+                    "Cover photo Q3_Alfen Eve Single Pro-line.jpg",
+                    "Eve Singel Pro Line 1920px.jpg"
+                ],
+                prolinedubbel: [
+                    "1685632011914.jpeg"
+                ]
+            }
+        };
+
+        function selectBrand(event) {
+            const brand = event.target.dataset.brand;
+            const modelsDiv = document.querySelector('.models');
+            const header = document.querySelector('.header');
+            const zaptecLogo = document.querySelector('.zaptec-logo');
+            const wallboxLogo = document.querySelector('.wallbox-logo');
+            const alfenLogo = document.querySelector('.alfen-logo');
+
+            modelsDiv.innerHTML = '';
+            modelsDiv.style.display = 'block';
+
+            zaptecLogo.classList.remove('centered', 'active');
+            wallboxLogo.classList.remove('centered', 'active');
+            alfenLogo.classList.remove('centered', 'active');
+
+            zaptecLogo.classList.add('inactive');
+            wallboxLogo.classList.add('inactive');
+            alfenLogo.classList.add('inactive');
+
+            let headerColor;
+            if (brand === 'zaptec') {
+                zaptecLogo.classList.add('centered', 'active');
+                zaptecLogo.classList.remove('inactive');
+                headerColor = '#C3AFA5';
+                header.style.background = headerColor;
+                modelsDiv.innerHTML = `
+                    <button data-model="go" onclick="selectModel(event, '${brand}')">Go</button>
+                    <button data-model="pro" onclick="selectModel(event, '${brand}')">Pro</button>
+                `;
+            } else if (brand === 'alfen') {
+                alfenLogo.classList.add('centered', 'active');
+                alfenLogo.classList.remove('inactive');
+                headerColor = '#A8C5DA';
+                header.style.background = headerColor;
+                modelsDiv.innerHTML = `
+                    <button data-model="sline" onclick="selectModel(event, '${brand}')">S-Line</button>
+                    <button data-model="proline" onclick="selectModel(event, '${brand}')">Pro-Line</button>
+                    <button data-model="prolinedubbel" onclick="selectModel(event, '${brand}')">Pro-Line Dubbel</button>
+                `;
+            } else if (brand === 'wallbox') {
+                wallboxLogo.classList.add('centered', 'active');
+                wallboxLogo.classList.remove('inactive');
+                headerColor = '#B8DAB8';
+                header.style.background = headerColor;
+                displayContent('default', brand);
+            }
+            const buttons = modelsDiv.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.style.background = headerColor;
+            });
+        }
+
+        function selectModel(event, brand) {
+            const model = event.target.dataset.model;
+            displayContent(model, brand);
+        }
+
+        function displayContent(model, brand) {
+            const featuresDiv = document.querySelector('.features');
+            const imagesDiv = document.querySelector('.images');
+            const largeImageDiv = document.querySelector('.large-image-container');
+            const footerDiv = document.querySelector('.footer');
+
+            featuresDiv.style.display = 'grid';
+            imagesDiv.style.display = 'grid';
+            largeImageDiv.style.display = 'flex';
+            footerDiv.style.display = 'block';
+
+            imagesDiv.innerHTML = '';
+            largeImageDiv.innerHTML = '';
+
+            const images = imagesData[brand][model] || imagesData[brand].default;
+
+            images.forEach((src, index) => {
+                const img = document.createElement('img');
+                img.src = src;
+                img.onclick = () => toggleEnlarge(img);
+                if (index === 0) {
+                    img.classList.add('large-image');
+                    largeImageDiv.appendChild(img);
+                } else {
+                    if (model === 'go' && index === images.length - 1) {
+                        img.classList.add('no-box');
+                    }
+                    imagesDiv.appendChild(img);
+                }
+            });
+        }
+
+        function toggleEnlarge(img) {
+            if (img.classList.contains('enlarged')) {
+                img.classList.remove('enlarged');
+            } else {
+                img.classList.add('enlarged');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const zaptecLogo = document.querySelector('.zaptec-logo');
+            const wallboxLogo = document.querySelector('.wallbox-logo');
+            const alfenLogo = document.querySelector('.alfen-logo');
+
+            zaptecLogo.addEventListener('click', selectBrand);
+            wallboxLogo.addEventListener('click', selectBrand);
+            alfenLogo.addEventListener('click', selectBrand);
+
+            window.addEventListener('scroll', () => {
+                const header = document.querySelector('.header');
+                const headerBackgroundColor = window.getComputedStyle(header).backgroundColor;
+                if (window.scrollY > 50) {
+                    header.style.background = headerBackgroundColor.replace('rgb', 'rgba').replace(')', ', 0.4)');
+                    header.classList.add('scrolled');
+                } else {
+                    header.style.background = headerBackgroundColor.replace('rgba', 'rgb').replace(', 0.4)', ')');
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            selectBrand({ target: zaptecLogo });
+        });
+    </script>
 </head>
 <body>
+    <div class="header">
+        <img src="Zaptec-logo-Black.png" alt="Zaptec Logo" class="zaptec-logo logo" data-brand="zaptec">
+        <img src="wallbox-logo.png" alt="Wallbox Logo" class="wallbox-logo logo" data-brand="wallbox">
+        <img src="alfen-logo-descr-wit-hor-01.png" alt="Alfen Logo" class="alfen-logo logo" data-brand="alfen">
+    </div>
     <div class="container">
-        <div class="header">
-            <img src="Zaptec-logo-Black.png" alt="Zaptec Logo">
-            <h1>Zaptec Go</h1>
-            <img src="Picture1.png" alt="Henk Scholten Logo" class="logo">
-        </div>
+        <div class="models"></div>
         <div class="features">
             <div class="feature">
                 <img src="22kw.png" alt="22 kW Icon">
@@ -180,15 +401,8 @@
                 <p>Zonder of met 6, 8 of 10 meter laadkabel</p>
             </div>
         </div>
-        <div class="images">
-            <img src="Screenshot 2024-07-03 215429.png" alt="Zaptec Go 1">
-            <img src="SHOT_090_STILL_WIDE_WOOD_ONLY-1.jpg" alt="Zaptec Go 2">
-            <img src="Zaptec_2022-14-scaled.jpg" alt="Zaptec Go 3">
-            <img src="Zaptec_2023_by Marthe Thu-49.jpg" alt="Zaptec Go 4">
-        </div>
-        <div class="large-image-container">
-            <img src="Ez9k_w_XIAAIWVP.png" alt="Zaptec Go 5" class="large-image">
-        </div>
+        <div class="images"></div>
+        <div class="large-image-container"></div>
         <div class="footer">
             <img src="Picture1.png" alt="Henk Scholten Logo">
             <p>Henk Scholten Mobility</p>
