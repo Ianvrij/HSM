@@ -20,6 +20,7 @@
             margin: 0 auto;
             padding: 20px;
             padding-top: 115px;
+            display: none; /* Initially hide the container */
         }
         .header {
             text-align: center;
@@ -27,7 +28,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            background: #f5f5dc;
+            background: #dcdcdc; /* Light grey color */
             padding: 10px 20px;
             color: #333;
             border-radius: 0 0 10px 10px;
@@ -35,17 +36,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 30px;
             transition: background 0.5s, padding 0.3s;
             z-index: 1000;
             height: 100px;
         }
         .header .logo-wrapper {
             display: flex;
-            gap: 0px;
+            gap: 30px;
+            margin: 0 auto;
         }
         .header.scrolled {
-            background-color: rgba(245, 245, 220, 0.4);
+            background-color: rgba(220, 220, 220, 0.4); /* Light grey color */
             backdrop-filter: blur(10px);
         }
         .header img {
@@ -72,14 +73,17 @@
         .centered {
             transform: translateX(-50%) scale(1.2);
         }
+        .istock-logo {
+            margin-right: 20px; /* Adjust this value to change the distance from the side */
+        }
         .models, .features, .images, .large-image-container, .footer {
             display: none;
         }
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
+            gap: 10px; /* Reduced gap for consistency */
+            margin-bottom: 20px; /* Reduced margin for consistency */
         }
         .feature {
             background: #fff;
@@ -105,14 +109,15 @@
             font-size: 16px;
         }
         .images {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px; /* Reduced gap for consistency */
+            margin-bottom: 20px; /* Reduced margin for consistency */
         }
         .images img {
-            width: 100%;
-            height: 250px;
+            width: calc(25% - 10px); /* Adjusted width for new gap */
+            height: auto;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             object-fit: cover;
@@ -121,23 +126,23 @@
         }
         .images img.png-image {
             background-color: #fff;
-            border: 1px solid #ccc;
-            padding: 10px;
+            border: none; /* Remove white box */
+            padding: 0;
             border-radius: 10px;
         }
-        .images.wallbox img {
-            height: 450px;
+        .images.wallbox img:last-child {
+            width: calc(50% - 10px); /* Make the last Wallbox image wider */
         }
-        .images img.no-box {
+        .images.wallbox img.no-box {
             box-shadow: none;
         }
         .large-image-container {
             display: flex;
             justify-content: center;
-            margin-bottom: 40px;
+            margin-bottom: 20px; /* Reduced margin for consistency */
         }
         .large-image {
-            width: 60%;
+            width: 70%; /* Make the lower image slightly bigger */
             height: auto;
             object-fit: cover;
             border-radius: 10px;
@@ -150,7 +155,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 40px;
+            margin-bottom: 20px; /* Reduced margin for consistency */
         }
         .product-info h2 {
             font-size: 2em;
@@ -244,7 +249,7 @@
             wallbox: {
                 default: [
                     "Wallbox-pulsar-plus-max.jpg",
-                    "0011041_wallbox-pulsar-max.webp",
+                    "0011041_wallbox-pulsar-max.png",
                     "IMG_7385.jpg.webp"
                 ]
             },
@@ -282,6 +287,8 @@
             const wallboxLogo = document.querySelector('.wallbox-logo');
             const alfenLogo = document.querySelector('.alfen-logo');
             const istockLogo = document.querySelector('.istock-logo');
+            const container = document.querySelector('.container'); // Get the container
+            const featuresDiv = document.querySelector('.features'); // Get the features div
 
             modelsDiv.innerHTML = '';
             modelsDiv.style.display = 'block';
@@ -306,6 +313,7 @@
                     <button data-model="go" onclick="selectModel(event, '${brand}')">Go</button>
                     <button data-model="pro" onclick="selectModel(event, '${brand}')">Pro</button>
                 `;
+                featuresDiv.style.display = 'grid'; // Show features for Zaptec
             } else if (brand === 'alfen') {
                 alfenLogo.classList.add('centered', 'active');
                 alfenLogo.classList.remove('inactive');
@@ -316,23 +324,28 @@
                     <button data-model="proline" onclick="selectModel(event, '${brand}')">Pro-Line</button>
                     <button data-model="prolinedubbel" onclick="selectModel(event, '${brand}')">Pro-Line Dubbel</button>
                 `;
+                featuresDiv.style.display = 'grid'; // Show features for Alfen
             } else if (brand === 'wallbox') {
                 wallboxLogo.classList.add('centered', 'active');
                 wallboxLogo.classList.remove('inactive');
                 headerColor = '#dcdcdc';  // Light grey for Wallbox
                 header.style.background = headerColor;
                 displayContent('default', brand);
+                featuresDiv.style.display = 'grid'; // Show features for Wallbox
             } else if (brand === 'istock') {
                 istockLogo.classList.add('centered', 'active');
                 istockLogo.classList.remove('inactive');
                 headerColor = '#f0f0f0';  // Light grey for istock
                 header.style.background = headerColor;
                 displayContent('default', brand);
+                featuresDiv.style.display = 'none'; // Hide features for istock
             }
             const buttons = modelsDiv.querySelectorAll('button');
             buttons.forEach(button => {
                 button.style.background = headerColor;
             });
+
+            container.style.display = 'block'; // Show the container
         }
 
         function selectModel(event, brand) {
@@ -347,7 +360,7 @@
             const footerDiv = document.querySelector('.footer');
 
             featuresDiv.style.display = 'grid';
-            imagesDiv.style.display = 'grid';
+            imagesDiv.style.display = 'flex';
             largeImageDiv.style.display = 'flex';
             footerDiv.style.display = 'block';
 
@@ -356,16 +369,28 @@
 
             const images = imagesData[brand][model] || imagesData[brand].default;
 
-            images.forEach((src, index) => {
-                const img = document.createElement('img');
-                img.src = src;
-                img.onclick = () => toggleEnlarge(img);
-                img.style.height = '100%';
-                img.style.width = '100%';
-                if (index === 0) {
-                    img.classList.add('large-image');
-                    largeImageDiv.appendChild(img);
-                } else {
+            if (brand === 'zaptec' && model === 'go') {
+                images.forEach((src, index) => {
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.onclick = () => toggleEnlarge(img);
+                    if (index > 0) {
+                        if (src.endsWith('.png')) {
+                            img.classList.add('png-image');
+                        }
+                        imagesDiv.appendChild(img);
+                    }
+                });
+                const firstImg = document.createElement('img');
+                firstImg.src = images[0];
+                firstImg.classList.add('large-image');
+                firstImg.onclick = () => toggleEnlarge(firstImg);
+                imagesDiv.appendChild(firstImg); // Append the first image last
+            } else {
+                images.forEach((src, index) => {
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.onclick = () => toggleEnlarge(img);
                     if (src.endsWith('.png')) {
                         img.classList.add('png-image');
                     }
@@ -378,8 +403,8 @@
                         imagesDiv.classList.remove('wallbox');
                     }
                     imagesDiv.appendChild(img);
-                }
-            });
+                });
+            }
         }
 
         function toggleEnlarge(img) {
@@ -413,7 +438,8 @@
                 }
             });
 
-            selectBrand({ target: zaptecLogo });
+            // Initially, only show the top bar
+            document.querySelector('.header').style.display = 'flex';
         });
     </script>
 </head>
@@ -446,8 +472,8 @@
                 <p>Zonder of met 6, 8 of 10 meter laadkabel</p>
             </div>
         </div>
-        <div class="images"></div>
         <div class="large-image-container"></div>
+        <div class="images"></div>
         <div class="footer">
             <img src="Picture1.png" alt="Henk Scholten Logo">
             <p>Incl. montage op 11 kW / installatie groepenkast laadvoorziening 5 meter.</p>
