@@ -253,6 +253,14 @@
                 prolinedubbel: [
                     "1685632011914.jpeg"
                 ]
+            },
+            istock: {
+                default: [
+                    "WhatsApp Image 2024-07-09 at 10.37.50_b06ef449.jpg",
+                    "WhatsApp Image 2024-07-09 at 10.37.50_705f3856.jpg",
+                    "1bdf786292f863b9b69c4dbaa595-removebg-preview.png",
+                    "7dfdea4e2c3379ee082654a0e871-removebg-preview.png"
+                ]
             }
         };
 
@@ -263,6 +271,7 @@
             const zaptecLogo = document.querySelector('.zaptec-logo');
             const wallboxLogo = document.querySelector('.wallbox-logo');
             const alfenLogo = document.querySelector('.alfen-logo');
+            const istockLogo = document.querySelector('.istock-logo');
 
             modelsDiv.innerHTML = '';
             modelsDiv.style.display = 'block';
@@ -270,10 +279,12 @@
             zaptecLogo.classList.remove('centered', 'active');
             wallboxLogo.classList.remove('centered', 'active');
             alfenLogo.classList.remove('centered', 'active');
+            istockLogo.classList.remove('centered', 'active');
 
             zaptecLogo.classList.add('inactive');
             wallboxLogo.classList.add('inactive');
             alfenLogo.classList.add('inactive');
+            istockLogo.classList.add('inactive');
 
             let headerColor;
             if (brand === 'zaptec') {
@@ -299,6 +310,12 @@
                 wallboxLogo.classList.add('centered', 'active');
                 wallboxLogo.classList.remove('inactive');
                 headerColor = '#B8DAB8';
+                header.style.background = headerColor;
+                displayContent('default', brand);
+            } else if (brand === 'istock') {
+                istockLogo.classList.add('centered', 'active');
+                istockLogo.classList.remove('inactive');
+                headerColor = '#FFD700';
                 header.style.background = headerColor;
                 displayContent('default', brand);
             }
@@ -362,10 +379,12 @@
             const zaptecLogo = document.querySelector('.zaptec-logo');
             const wallboxLogo = document.querySelector('.wallbox-logo');
             const alfenLogo = document.querySelector('.alfen-logo');
+            const istockLogo = document.querySelector('.istock-logo');
 
             zaptecLogo.addEventListener('click', selectBrand);
             wallboxLogo.addEventListener('click', selectBrand);
             alfenLogo.addEventListener('click', selectBrand);
+            istockLogo.addEventListener('click', selectBrand);
 
             window.addEventListener('scroll', () => {
                 const header = document.querySelector('.header');
@@ -385,7 +404,7 @@
 </head>
 <body>
     <div class="header">
-        <img src="istockphoto-1431371117-612x612-removebg-preview.png" alt="Main Logo" class="logo" style="margin-right: 150px;">
+        <img src="istockphoto-1431371117-612x612-removebg-preview.png" alt="Main Logo" class="istock-logo logo" data-brand="istock">
         <img src="Zaptec-logo-Black.png" alt="Zaptec Logo" class="zaptec-logo logo" data-brand="zaptec">
         <img src="wallbox-logo.png" alt="Wallbox Logo" class="wallbox-logo logo" data-brand="wallbox">
         <img src="alfen-logo-descr-wit-hor-01.png" alt="Alfen Logo" class="alfen-logo logo" data-brand="alfen">
@@ -410,12 +429,7 @@
                 <p>Zonder of met 6, 8 of 10 meter laadkabel</p>
             </div>
         </div>
-        <div class="images">
-            <img src="WhatsApp Image 2024-07-09 at 10.37.50_b06ef449.jpg" alt="Image 1">
-            <img src="WhatsApp Image 2024-07-09 at 10.37.50_705f3856.jpg" alt="Image 2">
-            <img src="1bdf786292f863b9b69c4dbaa595-removebg-preview.png" alt="Image 3">
-            <img src="7dfdea4e2c3379ee082654a0e871-removebg-preview.png" alt="Image 4">
-        </div>
+        <div class="images"></div>
         <div class="large-image-container"></div>
         <div class="footer">
             <img src="Picture1.png" alt="Henk Scholten Logo">
