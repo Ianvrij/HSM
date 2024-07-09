@@ -35,10 +35,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 150px;
+            gap: 30px;
             transition: background 0.5s, padding 0.3s;
             z-index: 1000;
             height: 100px;
+        }
+        .header .logo-wrapper {
+            display: flex;
+            gap: 30px;
         }
         .header.scrolled {
             background-color: rgba(245, 245, 220, 0.4);
@@ -114,6 +118,12 @@
             object-fit: cover;
             transition: transform 0.3s, z-index 0.3s;
             cursor: pointer;
+        }
+        .images img.png-image {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 10px;
         }
         .images.wallbox img {
             height: 450px;
@@ -315,7 +325,7 @@
             } else if (brand === 'istock') {
                 istockLogo.classList.add('centered', 'active');
                 istockLogo.classList.remove('inactive');
-                headerColor = '#FFD700';
+                headerColor = '#DAA520';
                 header.style.background = headerColor;
                 displayContent('default', brand);
             }
@@ -354,6 +364,9 @@
                     img.classList.add('large-image');
                     largeImageDiv.appendChild(img);
                 } else {
+                    if (src.endsWith('.png')) {
+                        img.classList.add('png-image');
+                    }
                     if (model === 'go' && index === images.length - 1) {
                         img.classList.add('no-box');
                     }
@@ -404,10 +417,12 @@
 </head>
 <body>
     <div class="header">
+        <div class="logo-wrapper">
+            <img src="Zaptec-logo-Black.png" alt="Zaptec Logo" class="zaptec-logo logo" data-brand="zaptec">
+            <img src="wallbox-logo.png" alt="Wallbox Logo" class="wallbox-logo logo" data-brand="wallbox">
+            <img src="alfen-logo-descr-wit-hor-01.png" alt="Alfen Logo" class="alfen-logo logo" data-brand="alfen">
+        </div>
         <img src="istockphoto-1431371117-612x612-removebg-preview.png" alt="Main Logo" class="istock-logo logo" data-brand="istock">
-        <img src="Zaptec-logo-Black.png" alt="Zaptec Logo" class="zaptec-logo logo" data-brand="zaptec">
-        <img src="wallbox-logo.png" alt="Wallbox Logo" class="wallbox-logo logo" data-brand="wallbox">
-        <img src="alfen-logo-descr-wit-hor-01.png" alt="Alfen Logo" class="alfen-logo logo" data-brand="alfen">
     </div>
     <div class="container">
         <div class="models"></div>
