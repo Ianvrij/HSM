@@ -220,6 +220,39 @@
         .large-image-lower {
             width: 50% !important; /* Specific size for lower image */
         }
+
+        /* Media Queries for Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                height: auto;
+                padding: 20px 10px;
+            }
+            .header .logo-wrapper {
+                gap: 10px;
+            }
+            .header img {
+                max-width: 150px;
+            }
+            .models button {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+            .feature {
+                padding: 5px;
+                height: auto;
+            }
+            .features {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 5px;
+            }
+            .images img {
+                width: calc(50% - 10px); /* Adjusted width for smaller screens */
+            }
+            .large-image {
+                width: 100%; /* Full width on mobile */
+            }
+        }
     </style>
     <script>
         const featuresData = {
