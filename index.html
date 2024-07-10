@@ -16,10 +16,10 @@
             overflow-x: hidden;
         }
         .container {
-            max-width: 1200px;
+            max-width: 1500px;
             margin: 0 auto;
             padding: 20px;
-            padding-top: 115px;
+            padding-top: 95px;
             display: none; /* Initially hide the container */
         }
         .header {
@@ -38,7 +38,7 @@
             align-items: center;
             transition: background 0.5s, padding 0.3s;
             z-index: 1000;
-            height: 100px;
+            height: 80px;
         }
         .header .logo-wrapper {
             display: flex;
@@ -74,46 +74,71 @@
             transform: translateX(-50%) scale(1.2);
         }
         .istock-logo {
-            margin-right: 20px; /* Adjust this value to change the distance from the side */
+            margin-right: 40px; /* Adjust this value to change the distance from the side */
         }
         .models, .features, .images, .large-image-container, .footer {
             display: none;
         }
+        .models {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 10px; /* Reduced margin-bottom */
+            padding: 10px 0; /* Ensure consistent spacing */
+        }
+        .models button {
+            margin: 5px;
+            padding: 10px 50px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            background: #0070f3;
+            color: white;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .models button:hover {
+            background: #005bb5;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 10px; /* Reduced gap for consistency */
-            margin-bottom: 20px; /* Reduced margin for consistency */
+            gap: 10px;
+            margin: 10px 0; /* Reduced margin */
         }
-        .feature {
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: transform 0.3s;
-            height: 150px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+.feature {
+    background: #fff;
+    padding: 10px; /* Adjust padding as needed */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s;
+    height: 100px; /* Reduced height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+        
         .feature:hover {
             transform: translateY(-10px);
         }
-        .feature img {
-            max-width: 80px;
-            margin-bottom: 10px;
+.feature img {
+    max-width: 60px; /* Adjust size as needed */
+    margin-bottom: 5px; /* Adjust margin as needed */
         }
-        .feature p {
-            font-size: 16px;
+.feature p {
+    font-size: 14px; /* Adjust font size as needed */
+    margin: 0; /* Remove default margin */
         }
         .images {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 10px; /* Reduced gap for consistency */
-            margin-bottom: 20px; /* Reduced margin for consistency */
+            gap: 10px;
+            margin: 10px 0; /* Reduced margin */
         }
         .images img {
             width: calc(25% - 10px); /* Adjusted width for new gap */
@@ -139,14 +164,14 @@
         .large-image-container {
             display: flex;
             justify-content: center;
-            margin-bottom: 20px; /* Reduced margin for consistency */
+            margin: 10px 0; /* Reduced margin */
         }
         .large-image {
-            width: 70%; /* Make the lower image slightly bigger */
+            width: 90%; /* Adjust the width to make the image larger */
             height: auto;
             object-fit: cover;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: none; /* Remove box-shadow */
             transition: transform 0.3s, z-index 0.3s;
             cursor: pointer;
         }
@@ -155,7 +180,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px; /* Reduced margin for consistency */
+            margin: 10px 0; /* Reduced margin */
         }
         .product-info h2 {
             font-size: 2em;
@@ -176,7 +201,7 @@
             text-align: center;
             padding: 20px;
             background: linear-gradient(to bottom, #666, #888);
-            margin-top: 20px;
+            margin: 10px 0; /* Reduced margin */
             border-radius: 10px;
             color: #fff;
         }
@@ -188,57 +213,72 @@
             margin: 5px 0;
             font-size: 1.2em;
         }
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            margin: 10px 0;
-            font-size: 1em;
-            color: #fff;
-            background: #0070f3;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .btn:hover {
-            background: #005bb5;
-        }
-        .models {
-            text-align: center;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-        .models button {
-            margin: 5px;
-            padding: 10px 20px;
-            font-size: 1em;
-            cursor: pointer;
-            border-radius: 5px;
-            border: none;
-            background: #0070f3;
-            color: white;
-            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-        .models button:hover {
-            background: #005bb5;
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
         .enlarged {
             transform: scale(2);
             z-index: 10;
         }
+        .large-image-lower {
+            width: 50% !important; /* Specific size for lower image */
+        }
     </style>
     <script>
+        const featuresData = {
+            zaptec: {
+                go: [
+                    { icon: "22kw.png", text: "22 kW (Installatie op 11kW)" },
+                    { icon: "Loadbalancing.png", text: "Load balancing" },
+                    { icon: "eflux.png", text: "Privé of zakelijk" },
+                    { icon: "Kabel.png", text: "Socket of met 6,8 of 10 meter laadkabel" }
+                ],
+                pro: [
+                    { icon: "22kw.png", text: "22 kW" },
+                    { icon: "Loadbalancing.png", text: "Load balancing" },
+                    { icon: "eflux.png", text: "Zakelijk" },
+                    { icon: "Kabel.png", text: "Socket" }
+                ]
+            },
+            wallbox: {
+                default: [
+                    { icon: "22kw.png", text: "11 kW" },
+                    { icon: "Loadbalancing.png", text: "Load balancing" },
+                    { icon: "eflux.png", text: "Privé" },
+                    { icon: "Kabel.png", text: "Met 5 of 7 meter laadkabel" }
+                ]
+            },
+            alfen: {
+                sline: [
+                    { icon: "22kw.png", text: "11 kW" },
+                    { icon: "Loadbalancing.png", text: "Load balancing" },
+                    { icon: "eflux.png", text: "Zakelijk" },
+                    { icon: "Kabel.png", text: "Socket of met 5 of 7 meter laadkabel" }
+                ],
+                proline: [
+                    { icon: "22kw.png", text: "11 kW" },
+                    { icon: "Loadbalancing.png", text: "Load balancing" },
+                    { icon: "eflux.png", text: "Zakelijk" },
+                    { icon: "Kabel.png", text: "Socket of met 5 of 7 meter laadkabel" }
+                ],
+                prolinedubbel: [
+                    { icon: "22kw.png", text: "22 kW" },
+                    { icon: "Loadbalancing.png", text: "Load balancing" },
+                    { icon: "eflux.png", text: "Zakelijk" },
+                    { icon: "Kabel.png", text: "Dubbele socket" }
+                ]
+            },
+            istock: {
+                paal: [],  // No features for Paal
+                overig: []  // No features for Overig
+            }
+        };
+
         const imagesData = {
             zaptec: {
                 go: [
-                    "Ez9k_w_XIAAIWVP.png",
+                    "Screenshot 2024-07-03 215429.png",
                     "SHOT_090_STILL_WIDE_WOOD_ONLY-1.jpg",
                     "Zaptec_2022-14-scaled.jpg",
                     "Zaptec_2023_by Marthe Thu-49.jpg",
-                    "Screenshot 2024-07-03 215429.png"
+                    "Ez9k_w_XIAAIWVP.png"
                 ],
                 pro: [
                     "zaptec-pro-beton-1x.jpg",
@@ -270,11 +310,16 @@
                 ]
             },
             istock: {
-                default: [
+                paal: [
                     "WhatsApp Image 2024-07-09 at 10.37.50_b06ef449.jpg",
                     "WhatsApp Image 2024-07-09 at 10.37.50_705f3856.jpg",
                     "1bdf786292f863b9b69c4dbaa595-removebg-preview.png",
                     "7dfdea4e2c3379ee082654a0e871-removebg-preview.png"
+                ],
+                overig: [
+                    "pulse-p1_environment.jpg",
+                    "Tibber-Pulse-met-dynamisch-energie-contract-removebg-preview.png",
+                    "zaptec-rfid-charging.jpg"
                 ]
             }
         };
@@ -289,7 +334,18 @@
             const istockLogo = document.querySelector('.istock-logo');
             const container = document.querySelector('.container'); // Get the container
             const featuresDiv = document.querySelector('.features'); // Get the features div
+            const imagesDiv = document.querySelector('.images'); // Get the images div
+            const largeImageDiv = document.querySelector('.large-image-container'); // Get the large image div
+            const footerDiv = document.querySelector('.footer'); // Get the footer div
 
+            // Initially hide all sections
+            modelsDiv.style.display = 'none';
+            featuresDiv.style.display = 'none';
+            imagesDiv.style.display = 'none';
+            largeImageDiv.style.display = 'none';
+            footerDiv.style.display = 'none';
+
+            // Reset and show the option buttons
             modelsDiv.innerHTML = '';
             modelsDiv.style.display = 'block';
 
@@ -313,7 +369,6 @@
                     <button data-model="go" onclick="selectModel(event, '${brand}')">Go</button>
                     <button data-model="pro" onclick="selectModel(event, '${brand}')">Pro</button>
                 `;
-                featuresDiv.style.display = 'grid'; // Show features for Zaptec
             } else if (brand === 'alfen') {
                 alfenLogo.classList.add('centered', 'active');
                 alfenLogo.classList.remove('inactive');
@@ -324,21 +379,23 @@
                     <button data-model="proline" onclick="selectModel(event, '${brand}')">Pro-Line</button>
                     <button data-model="prolinedubbel" onclick="selectModel(event, '${brand}')">Pro-Line Dubbel</button>
                 `;
-                featuresDiv.style.display = 'grid'; // Show features for Alfen
             } else if (brand === 'wallbox') {
                 wallboxLogo.classList.add('centered', 'active');
                 wallboxLogo.classList.remove('inactive');
                 headerColor = '#dcdcdc';  // Light grey for Wallbox
                 header.style.background = headerColor;
-                displayContent('default', brand);
-                featuresDiv.style.display = 'grid'; // Show features for Wallbox
+                modelsDiv.innerHTML = `
+                    <button data-model="default" onclick="selectModel(event, '${brand}')">Pulsar Max</button>
+                `;
             } else if (brand === 'istock') {
                 istockLogo.classList.add('centered', 'active');
                 istockLogo.classList.remove('inactive');
                 headerColor = '#f0f0f0';  // Light grey for istock
                 header.style.background = headerColor;
-                displayContent('default', brand);
-                featuresDiv.style.display = 'none'; // Hide features for istock
+                modelsDiv.innerHTML = `
+                    <button data-model="paal" onclick="selectModel(event, '${brand}')">Paal</button>
+                    <button data-model="overig" onclick="selectModel(event, '${brand}')">Overig</button>
+                `;
             }
             const buttons = modelsDiv.querySelectorAll('button');
             buttons.forEach(button => {
@@ -364,8 +421,20 @@
             largeImageDiv.style.display = 'flex';
             footerDiv.style.display = 'block';
 
+            featuresDiv.innerHTML = '';
             imagesDiv.innerHTML = '';
             largeImageDiv.innerHTML = '';
+
+            const features = featuresData[brand][model] || [];
+            features.forEach(feature => {
+                const featureDiv = document.createElement('div');
+                featureDiv.classList.add('feature');
+                featureDiv.innerHTML = `
+                    <img src="${feature.icon}" alt="${feature.text}">
+                    <p>${feature.text}</p>
+                `;
+                featuresDiv.appendChild(featureDiv);
+            });
 
             const images = imagesData[brand][model] || imagesData[brand].default;
 
@@ -373,7 +442,11 @@
                 images.forEach((src, index) => {
                     const img = document.createElement('img');
                     img.src = src;
+                    img.style.width = "calc(25% - 10px)"; /* Ensure all images have the same size */
                     img.onclick = () => toggleEnlarge(img);
+                    if (src === "Ez9k_w_XIAAIWVP.png") {
+                        img.classList.add('large-image-lower'); /* Specific size for lower image */
+                    }
                     if (index > 0) {
                         if (src.endsWith('.png')) {
                             img.classList.add('png-image');
@@ -384,8 +457,21 @@
                 const firstImg = document.createElement('img');
                 firstImg.src = images[0];
                 firstImg.classList.add('large-image');
+                firstImg.classList.add('no-box');  // Add this line to remove box-shadow from large image
                 firstImg.onclick = () => toggleEnlarge(firstImg);
                 imagesDiv.appendChild(firstImg); // Append the first image last
+                imagesDiv.insertBefore(imagesDiv.lastChild, imagesDiv.firstChild); // Move the last image to the first position
+            } else if (brand === 'alfen' && model === 'prolinedubbel') {
+                images.forEach((src, index) => {
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.style.width = "calc(25% - 10px)"; /* Ensure all images have the same size */
+                    img.onclick = () => toggleEnlarge(img);
+                    if (index === 0) {
+                        img.classList.add('large-image-lower'); /* Specific size for first image */
+                    }
+                    imagesDiv.appendChild(img);
+                });
             } else {
                 images.forEach((src, index) => {
                     const img = document.createElement('img');
@@ -404,6 +490,11 @@
                     }
                     imagesDiv.appendChild(img);
                 });
+            }
+
+            // If the brand is istock and model is paal or overig, skip showing features
+            if (brand === 'istock' && (model === 'paal' || model === 'overig')) {
+                featuresDiv.style.display = 'none';
             }
         }
 
@@ -454,24 +545,7 @@
     </div>
     <div class="container">
         <div class="models"></div>
-        <div class="features">
-            <div class="feature">
-                <img src="22kw.png" alt="22 kW Icon">
-                <p>22 kW</p>
-            </div>
-            <div class="feature">
-                <img src="Loadbalancing.png" alt="Load Balancing Icon">
-                <p>Load balancing</p>
-            </div>
-            <div class="feature">
-                <img src="eflux.png" alt="E-Flux Icon">
-                <p>Met of zonder E-Flux</p>
-            </div>
-            <div class="feature">
-                <img src="Kabel.png" alt="Kabel Icon">
-                <p>Zonder of met 6, 8 of 10 meter laadkabel</p>
-            </div>
-        </div>
+        <div class="features"></div>
         <div class="large-image-container"></div>
         <div class="images"></div>
         <div class="footer">
