@@ -16,7 +16,7 @@
             overflow-x: hidden;
         }
         .container {
-            max-width: 1500px;
+            max-width: 1300px;
             margin: 0 auto;
             padding: 20px;
             padding-top: 95px;
@@ -108,30 +108,29 @@
             gap: 10px;
             margin: 10px 0; /* Reduced margin */
         }
-.feature {
-    background: #fff;
-    padding: 10px; /* Adjust padding as needed */
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.3s;
-    height: 100px; /* Reduced height */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-        
+        .feature {
+            background: #fff;
+            padding: 10px; /* Adjust padding as needed */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s;
+            height: 100px; /* Reduced height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
         .feature:hover {
             transform: translateY(-10px);
         }
-.feature img {
-    max-width: 60px; /* Adjust size as needed */
-    margin-bottom: 5px; /* Adjust margin as needed */
+        .feature img {
+            max-width: 60px; /* Adjust size as needed */
+            margin-bottom: 5px; /* Adjust margin as needed */
         }
-.feature p {
-    font-size: 14px; /* Adjust font size as needed */
-    margin: 0; /* Remove default margin */
+        .feature p {
+            font-size: 14px; /* Adjust font size as needed */
+            margin: 0; /* Remove default margin */
         }
         .images {
             display: flex;
@@ -220,6 +219,11 @@
         .large-image-lower {
             width: 50% !important; /* Specific size for lower image */
         }
+        .overig-image {
+            width: 500px !important; /* Ensure fixed width */
+            height: 300px !important; /* Ensure fixed height */
+            object-fit: cover; /* Optional: make sure the image covers the given dimensions */
+        }
 
         /* Media Queries for Mobile Responsiveness */
         @media (max-width: 768px) {
@@ -300,7 +304,9 @@
             },
             istock: {
                 paal: [],  // No features for Paal
-                overig: []  // No features for Overig
+                overig: [],  // No features for Overig
+                loadbalancing: [],  // No features for Loadbalancing
+                team: []  // No features for Team
             }
         };
 
@@ -350,9 +356,14 @@
                     "7dfdea4e2c3379ee082654a0e871-removebg-preview.png"
                 ],
                 overig: [
-                    "pulse-p1_environment.jpg",
-                    "Tibber-Pulse-met-dynamisch-energie-contract-removebg-preview.png",
                     "zaptec-rfid-charging.jpg"
+                ],
+                loadbalancing: [
+                    "pulse-p1_environment.jpg",
+                    "Tibber-Pulse-met-dynamisch-energie-contract-removebg-preview.png"
+                ],
+                team: [
+                    // Add team images here
                 ]
             }
         };
@@ -428,6 +439,8 @@
                 modelsDiv.innerHTML = `
                     <button data-model="paal" onclick="selectModel(event, '${brand}')">Paal</button>
                     <button data-model="overig" onclick="selectModel(event, '${brand}')">Overig</button>
+                    <button data-model="loadbalancing" onclick="selectModel(event, '${brand}')">Loadbalancing</button>
+                    <button data-model="team" onclick="selectModel(event, '${brand}')">Team</button>
                 `;
             }
             const buttons = modelsDiv.querySelectorAll('button');
@@ -494,6 +507,28 @@
                 firstImg.onclick = () => toggleEnlarge(firstImg);
                 imagesDiv.appendChild(firstImg); // Append the first image last
                 imagesDiv.insertBefore(imagesDiv.lastChild, imagesDiv.firstChild); // Move the last image to the first position
+            } else if (brand === 'zaptec' && model === 'pro') {
+                images.forEach(src => {
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.style.width = "calc(33% - 10px)"; /* Make images larger */
+                    img.onclick = () => toggleEnlarge(img);
+                    if (src.endsWith('.png')) {
+                        img.classList.add('png-image');
+                    }
+                    imagesDiv.appendChild(img);
+                });
+            } else if (brand === 'alfen' && model === 'sline') {
+                images.forEach(src => {
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.style.width = "calc(33% - 10px)"; /* Make images larger */
+                    img.onclick = () => toggleEnlarge(img);
+                    if (src.endsWith('.png')) {
+                        img.classList.add('png-image');
+                    }
+                    imagesDiv.appendChild(img);
+                });
             } else if (brand === 'alfen' && model === 'prolinedubbel') {
                 images.forEach((src, index) => {
                     const img = document.createElement('img');
@@ -503,6 +538,15 @@
                     if (index === 0) {
                         img.classList.add('large-image-lower'); /* Specific size for first image */
                     }
+                    imagesDiv.appendChild(img);
+                });
+            } else if (brand === 'istock' && model === 'overig') {
+                featuresDiv.style.display = 'none';
+                images.forEach(src => {
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.classList.add('overig-image'); // Add this line
+                    img.onclick = () => toggleEnlarge(img);
                     imagesDiv.appendChild(img);
                 });
             } else {
@@ -523,11 +567,6 @@
                     }
                     imagesDiv.appendChild(img);
                 });
-            }
-
-            // If the brand is istock and model is paal or overig, skip showing features
-            if (brand === 'istock' && (model === 'paal' || model === 'overig')) {
-                featuresDiv.style.display = 'none';
             }
         }
 
@@ -583,7 +622,7 @@
         <div class="images"></div>
         <div class="footer">
             <img src="Picture1.png" alt="Henk Scholten Logo">
-                    </div>
+        </div>
     </div>
 </body>
 </html>
