@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Installatie van Uw Laadoplossingen</title>
+    <title>Product Selector</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
@@ -13,72 +13,81 @@
             color: #333;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            overflow-x: hidden;
         }
         .container {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
             padding: 20px;
-            padding-top: 120px;
-            flex: 1;
-            width: 100%;
-            box-sizing: border-box;
+            padding-top: 95px;
+            display: none; /* Initially hide the container */
         }
         .header {
+            text-align: center;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            background: #dcdcdc;
-            color: #333;
+            background: #dcdcdc; /* Light grey color */
             padding: 10px 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            color: #333;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.5s, padding 0.3s;
             z-index: 1000;
             height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
         }
         .header .logo-wrapper {
             display: flex;
-            align-items: center;
+            gap: 30px;
+            margin: 0 auto;
+        }
+        .header.scrolled {
+            background-color: rgba(220, 220, 220, 0.4); /* Light grey color */
+            backdrop-filter: blur(10px);
         }
         .header img {
-            max-height: 40px;
-            margin-right: 20px;
+            max-height: 100%;
+            max-width: 200px;
+            cursor: pointer;
+            transition: opacity 0.6s, transform 1.2s;
+            object-fit: contain;
         }
-        .header h1 {
-            font-size: 1.5em;
-            margin: 0;
+        .header img:hover {
+            transform: scale(1.1);
+        }
+        .logo {
+            transition: transform 1.2s, opacity 0.6s;
+        }
+        .logo.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .logo.inactive {
+            opacity: 0.5;
+            transform: translateX(0);
+        }
+        .centered {
+            transform: translateX(-50%) scale(1.2);
+        }
+        .istock-logo {
+            margin-right: 40px; /* Adjust this value to change the distance from the side */
+        }
+        .models, .features, .images, .large-image-container, .footer {
+            display: none;
+        }
+        .models {
             text-align: center;
-            flex: 1;
+            margin-top: 10px;
+            margin-bottom: 10px; /* Reduced margin-bottom */
+            padding: 10px 0; /* Ensure consistent spacing */
         }
-        .section {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin: 20px 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .section h2, .section h3 {
-            color: #35424a;
-        }
-        .important {
-            color: #e8491d;
-            font-weight: bold;
-        }
-        .button-container {
-            text-align: center;
-            margin: 20px 0;
-        }
-        .button-container button {
+        .models button {
             margin: 5px;
-            padding: 12px 30px;
+            padding: 10px 50px;
             font-size: 1em;
             cursor: pointer;
             border-radius: 5px;
@@ -88,519 +97,531 @@
             transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
-        .button-container button:hover {
+        .models button:hover {
             background: #005bb5;
-            transform: translateY(-3px);
+            transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
-        .steps {
-            margin: 20px 0;
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+            margin: 10px 0; /* Reduced margin */
         }
-        .steps ol {
-            padding-left: 20px;
+        .feature {
+            background: #fff;
+            padding: 10px; /* Adjust padding as needed */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s;
+            height: 100px; /* Reduced height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
-        .steps li {
+        .feature:hover {
+            transform: translateY(-10px);
+        }
+        .feature img {
+            max-width: 60px; /* Adjust size as needed */
+            margin-bottom: 5px; /* Adjust margin as needed */
+        }
+        .feature p {
+            font-size: 14px; /* Adjust font size as needed */
+            margin: 0; /* Remove default margin */
+        }
+        .images {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px 0; /* Reduced margin */
+        }
+        .images img {
+            width: calc(25% - 10px); /* Adjusted width for new gap */
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            object-fit: cover;
+            transition: transform 0.3s, z-index 0.3s;
+            cursor: pointer;
+        }
+        .images img.png-image {
+            background-color: #fff;
+            border: none; /* Remove white box */
+            padding: 0;
+            border-radius: 10px;
+        }
+        .images.wallbox img:last-child {
+            width: calc(50% - 10px); /* Make the last Wallbox image wider */
+        }
+        .images.wallbox img.no-box {
+            box-shadow: none;
+        }
+        .large-image-container {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0; /* Reduced margin */
+        }
+        .large-image {
+            width: 90%; /* Adjust the width to make the image larger */
+            height: auto;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: none; /* Remove box-shadow */
+            transition: transform 0.3s, z-index 0.3s;
+            cursor: pointer;
+        }
+        .product-info {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 10px 0; /* Reduced margin */
+        }
+        .product-info h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .product-info p {
+            font-size: 1.2em;
             margin-bottom: 10px;
         }
-        .back-button {
-            text-align: center;
-            margin-top: 20px;
+        .product-info ul {
+            list-style-type: disc;
+            padding-left: 20px;
         }
-        .back-button button {
-            background: #e8491d;
-            margin: 5px;
-            padding: 12px 30px;
-            font-size: 1em;
-            cursor: pointer;
-            border-radius: 5px;
-            border: none;
-            color: white;
-            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-        .back-button button:hover {
-            background: #cc0000;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        .product-info ul li {
+            margin-bottom: 10px;
         }
         .footer {
             text-align: center;
-            padding: 10px;
-            background: #333;
-            color: white;
-            border-top: 1px solid #ccc;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .footer .contact-info {
-            display: flex;
-            justify-content: space-around;
-            width: 100%;
-            max-width: 1200px;
-            font-size: 0.9em;
-            flex-wrap: wrap;
-        }
-        .footer .contact-info div {
-            margin: 10px;
-        }
-        .footer .contact-info a {
+            padding: 20px;
+            background: linear-gradient(to bottom, #666, #888);
+            margin: 10px 0; /* Reduced margin */
+            border-radius: 10px;
             color: #fff;
-            text-decoration: none;
         }
-        .footer .contact-info a:hover {
-            text-decoration: underline;
-        }
-        .footer .terms {
+        .footer img {
+            max-width: 200px;
             margin-top: 10px;
-            font-size: 0.8em;
         }
-        .footer .terms a {
-            color: #0070f3;
-            text-decoration: none;
+        .footer p {
+            margin: 5px 0;
+            font-size: 1.2em;
         }
-        .footer .terms a:hover {
-            text-decoration: underline;
+        .enlarged {
+            transform: scale(2);
+            z-index: 10;
         }
-        .image-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 20px 0;
-            flex-wrap: wrap;
+        .large-image-lower {
+            width: 50% !important; /* Specific size for lower image */
         }
-        .image-container img {
-            max-width: 100px;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        .overig-image {
+            width: 500px !important; /* Ensure fixed width */
+            height: 300px !important; /* Ensure fixed height */
+            object-fit: cover; /* Optional: make sure the image covers the given dimensions */
         }
+
         /* Media Queries for Mobile Responsiveness */
         @media (max-width: 768px) {
-            .container {
-                padding-top: 100px;
-                padding-left: 10px;
-                padding-right: 10px;
-            }
             .header {
                 flex-direction: column;
                 height: auto;
                 padding: 20px 10px;
-                text-align: center;
             }
             .header .logo-wrapper {
-                margin-bottom: 10px;
+                gap: 10px;
             }
             .header img {
-                max-height: 30px;
-                margin-right: 0;
+                max-width: 150px;
             }
-            .header h1 {
-                font-size: 1.2em;
-            }
-            .button-container button {
+            .models button {
                 padding: 10px 20px;
                 font-size: 0.9em;
             }
-            .image-container img {
-                max-width: 80px;
+            .feature {
+                padding: 5px;
+                height: auto;
             }
-            .footer .contact-info {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
+            .features {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 5px;
             }
-            .footer .contact-info div {
-                margin: 5px 0;
+            .images img {
+                width: calc(50% - 10px); /* Adjusted width for smaller screens */
+            }
+            .large-image {
+                width: 100%; /* Full width on mobile */
             }
         }
     </style>
     <script>
-        let currentStep = 0;
-        const steps = ['intro', 'chooseType', 'chooseSolution', 'eflux', 'chooseSolutionAfterEflux', 'zaptecOptions', 'zaptecAppDownload', 'zaptecAccount', 'wallboxOptions', 'wallboxAppDownload', 'wallboxAccount', 'alfenOptions', 'alfenAppDownload', 'alfenAccount', 'loadBalancing', 'chooseTibberOption', 'tibberApp', 'tibberAccount', 'contact'];
-        const stepHistory = [];
+        const featuresData = {
+            zaptec: {
+                go: [
+                    { icon: "22kw.png", text: "22 kW (Installatie op 11kW)" },
+                    { icon: "Loadbalancing.png", text: "Load balancing" },
+                    { icon: "eflux.png", text: "Privé of zakelijk" },
+                    { icon: "Kabel.png", text: "Socket of met 6,8 of 10 meter laadkabel" }
+                ],
+                pro: [
+                    { icon: "22kw.png", text: "22 kW" },
+                    { icon: "Loadbalancing.png", text: "Load balancing" },
+                    { icon: "eflux.png", text: "Zakelijk" },
+                    { icon: "Kabel.png", text: "Socket" }
+                ]
+            },
+            wallbox: {
+                default: [
+                    { icon: "22kw.png", text: "22 kW (Installatie op 11kW)" },
+                    { icon: "Loadbalancing.png", text: "Load balancing" },
+                    { icon: "eflux.png", text: "Privé" },
+                    { icon: "Kabel.png", text: "Met 5 of 7 meter laadkabel" }
+                ]
+            },
+            alfen: {
+                sline: [
+                    { icon: "22kw.png", text: "11 kW" },
+                    { icon: "Loadbalancing.png", text: "Load balancing" },
+                    { icon: "eflux.png", text: "Zakelijk" },
+                    { icon: "Kabel.png", text: "Socket of met 5 of 7 meter laadkabel" }
+                ],
+                proline: [
+                    { icon: "22kw.png", text: "22 kW (Installatie op 11kW)" },
+                    { icon: "Loadbalancing.png", text: "Load balancing" },
+                    { icon: "eflux.png", text: "Zakelijk" },
+                    { icon: "Kabel.png", text: "Socket of met 5 of 7 meter laadkabel" }
+                ],
+                prolinedubbel: [
+                    { icon: "22kw.png", text: "22 kW" },
+                    { icon: "Loadbalancing.png", text: "Load balancing" },
+                    { icon: "eflux.png", text: "Zakelijk" },
+                    { icon: "Kabel.png", text: "Dubbele socket" }
+                ]
+            },
+            istock: {
+                paal: [],  // No features for Paal
+                overig: [],  // No features for Overig
+                loadbalancing: [],  // No features for Loadbalancing
+                team: []  // No features for Team
+            }
+        };
 
-        function showStep(stepIndex) {
-            stepHistory.push(currentStep);
-            steps.forEach((step, index) => {
-                document.getElementById(step).style.display = index === stepIndex ? 'block' : 'none';
+        const imagesData = {
+            zaptec: {
+                go: [
+                    "Screenshot 2024-07-03 215429.png",
+                    "SHOT_090_STILL_WIDE_WOOD_ONLY-1.jpg",
+                    "Zaptec_2022-14-scaled.jpg",
+                    "Zaptec_2023_by Marthe Thu-49.jpg",
+                    "Ez9k_w_XIAAIWVP.png"
+                ],
+                pro: [
+                    "zaptec-pro-beton-1x.jpg",
+                    "Zaptec-Pro-environment.webp",
+                    "3.jpg"
+                ]
+            },
+            wallbox: {
+                default: [
+                    "Wallbox-pulsar-plus-max.jpg",
+                    "0011041_wallbox-pulsar-max.png",
+                    "IMG_7385.jpg.webp"
+                ]
+            },
+            alfen: {
+                sline: [
+                    "Alfen Eve Single S-Line.jpeg",
+                    "HENK-SCHOLTEN-MOBILITY-69_2.jpg.webp",
+                    "IMG_7223.jpg.webp"
+                ],
+                proline: [
+                    "volvo-scholten-189.jpg.webp",
+                    "Oplaadpunten Eve Single Pro Alfen wit thuis zoom_.jpg",
+                    "Cover photo Q3_Alfen Eve Single Pro-line.jpg",
+                    "Eve Singel Pro Line 1920px.jpg"
+                ],
+                prolinedubbel: [
+                    "1685632011914.jpeg"
+                ]
+            },
+            istock: {
+                paal: [
+                    "WhatsApp Image 2024-07-09 at 10.37.50_b06ef449.jpg",
+                    "WhatsApp Image 2024-07-09 at 10.37.50_705f3856.jpg",
+                    "1bdf786292f863b9b69c4dbaa595-removebg-preview.png",
+                    "7dfdea4e2c3379ee082654a0e871-removebg-preview.png"
+                ],
+                overig: [
+                    "zaptec-rfid-charging.jpg"
+                ],
+                loadbalancing: [
+                    "pulse-p1_environment.jpg",
+                    "Tibber-Pulse-met-dynamisch-energie-contract-removebg-preview.png"
+                ],
+                team: [
+                    // Add team images here
+                ]
+            }
+        };
+
+        function selectBrand(event) {
+            const brand = event.target.dataset.brand;
+            const modelsDiv = document.querySelector('.models');
+            const header = document.querySelector('.header');
+            const zaptecLogo = document.querySelector('.zaptec-logo');
+            const wallboxLogo = document.querySelector('.wallbox-logo');
+            const alfenLogo = document.querySelector('.alfen-logo');
+            const istockLogo = document.querySelector('.istock-logo');
+            const container = document.querySelector('.container'); // Get the container
+            const featuresDiv = document.querySelector('.features'); // Get the features div
+            const imagesDiv = document.querySelector('.images'); // Get the images div
+            const largeImageDiv = document.querySelector('.large-image-container'); // Get the large image div
+            const footerDiv = document.querySelector('.footer'); // Get the footer div
+
+            // Initially hide all sections
+            modelsDiv.style.display = 'none';
+            featuresDiv.style.display = 'none';
+            imagesDiv.style.display = 'none';
+            largeImageDiv.style.display = 'none';
+            footerDiv.style.display = 'none';
+
+            // Reset and show the option buttons
+            modelsDiv.innerHTML = '';
+            modelsDiv.style.display = 'block';
+
+            zaptecLogo.classList.remove('centered', 'active');
+            wallboxLogo.classList.remove('centered', 'active');
+            alfenLogo.classList.remove('centered', 'active');
+            istockLogo.classList.remove('centered', 'active');
+
+            zaptecLogo.classList.add('inactive');
+            wallboxLogo.classList.add('inactive');
+            alfenLogo.classList.add('inactive');
+            istockLogo.classList.add('inactive');
+
+            let headerColor;
+            if (brand === 'zaptec') {
+                zaptecLogo.classList.add('centered', 'active');
+                zaptecLogo.classList.remove('inactive');
+                headerColor = '#d3d3d3';  // Light grey for Zaptec
+                header.style.background = headerColor;
+                modelsDiv.innerHTML = `
+                    <button data-model="go" onclick="selectModel(event, '${brand}')">Go</button>
+                    <button data-model="pro" onclick="selectModel(event, '${brand}')">Pro</button>
+                `;
+            } else if (brand === 'alfen') {
+                alfenLogo.classList.add('centered', 'active');
+                alfenLogo.classList.remove('inactive');
+                headerColor = '#e0e0e0';  // Light grey for Alfen
+                header.style.background = headerColor;
+                modelsDiv.innerHTML = `
+                    <button data-model="sline" onclick="selectModel(event, '${brand}')">S-Line</button>
+                    <button data-model="proline" onclick="selectModel(event, '${brand}')">Pro-Line</button>
+                    <button data-model="prolinedubbel" onclick="selectModel(event, '${brand}')">Pro-Line Dubbel</button>
+                `;
+            } else if (brand === 'wallbox') {
+                wallboxLogo.classList.add('centered', 'active');
+                wallboxLogo.classList.remove('inactive');
+                headerColor = '#dcdcdc';  // Light grey for Wallbox
+                header.style.background = headerColor;
+                modelsDiv.innerHTML = `
+                    <button data-model="default" onclick="selectModel(event, '${brand}')">Pulsar Max</button>
+                `;
+            } else if (brand === 'istock') {
+                istockLogo.classList.add('centered', 'active');
+                istockLogo.classList.remove('inactive');
+                headerColor = '#f0f0f0';  // Light grey for istock
+                header.style.background = headerColor;
+                modelsDiv.innerHTML = `
+                    <button data-model="paal" onclick="selectModel(event, '${brand}')">Paal</button>
+                    <button data-model="overig" onclick="selectModel(event, '${brand}')">Overig</button>
+                    <button data-model="loadbalancing" onclick="selectModel(event, '${brand}')">Loadbalancing</button>
+                    <button data-model="team" onclick="selectModel(event, '${brand}')">Team</button>
+                `;
+            }
+            const buttons = modelsDiv.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.style.background = headerColor;
             });
-            currentStep = stepIndex;
-            document.getElementById('backButton').style.display = stepIndex > 0 && stepIndex < steps.length - 1 ? 'block' : 'none';
+
+            container.style.display = 'block'; // Show the container
         }
 
-        function nextStep() {
-            if (currentStep < steps.length - 1) {
-                showStep(currentStep + 1);
-            }
+        function selectModel(event, brand) {
+            const model = event.target.dataset.model;
+            displayContent(model, brand);
         }
 
-        function previousStep() {
-            if (stepHistory.length > 0) {
-                const previousStep = stepHistory.pop();
-                currentStep = previousStep;
-                steps.forEach((step, index) => {
-                    document.getElementById(step).style.display = index === currentStep ? 'block' : 'none';
+        function displayContent(model, brand) {
+            const featuresDiv = document.querySelector('.features');
+            const imagesDiv = document.querySelector('.images');
+            const largeImageDiv = document.querySelector('.large-image-container');
+            const footerDiv = document.querySelector('.footer');
+
+            featuresDiv.style.display = 'grid';
+            imagesDiv.style.display = 'flex';
+            largeImageDiv.style.display = 'flex';
+            footerDiv.style.display = 'block';
+
+            featuresDiv.innerHTML = '';
+            imagesDiv.innerHTML = '';
+            largeImageDiv.innerHTML = '';
+
+            const features = featuresData[brand][model] || [];
+            features.forEach(feature => {
+                const featureDiv = document.createElement('div');
+                featureDiv.classList.add('feature');
+                featureDiv.innerHTML = `
+                    <img src="${feature.icon}" alt="${feature.text}">
+                    <p>${feature.text}</p>
+                `;
+                featuresDiv.appendChild(featureDiv);
+            });
+
+            const images = imagesData[brand][model] || imagesData[brand].default;
+
+            if (brand === 'zaptec' && model === 'go') {
+                images.forEach((src, index) => {
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.style.width = "calc(25% - 10px)"; /* Ensure all images have the same size */
+                    img.onclick = () => toggleEnlarge(img);
+                    if (src === "Ez9k_w_XIAAIWVP.png") {
+                        img.classList.add('large-image-lower'); /* Specific size for lower image */
+                    }
+                    if (index > 0) {
+                        if (src.endsWith('.png')) {
+                            img.classList.add('png-image');
+                        }
+                        imagesDiv.appendChild(img);
+                    }
                 });
-                document.getElementById('backButton').style.display = currentStep > 0 && currentStep < steps.length - 1 ? 'block' : 'none';
+                const firstImg = document.createElement('img');
+                firstImg.src = images[0];
+                firstImg.classList.add('large-image');
+                firstImg.classList.add('no-box');  // Add this line to remove box-shadow from large image
+                firstImg.onclick = () => toggleEnlarge(firstImg);
+                imagesDiv.appendChild(firstImg); // Append the first image last
+                imagesDiv.insertBefore(imagesDiv.lastChild, imagesDiv.firstChild); // Move the last image to the first position
+            } else if (brand === 'zaptec' && model === 'pro') {
+                images.forEach(src => {
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.style.width = "calc(33% - 10px)"; /* Make images larger */
+                    img.onclick = () => toggleEnlarge(img);
+                    if (src.endsWith('.png')) {
+                        img.classList.add('png-image');
+                    }
+                    imagesDiv.appendChild(img);
+                });
+            } else if (brand === 'alfen' && model === 'sline') {
+                images.forEach(src => {
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.style.width = "calc(33% - 10px)"; /* Make images larger */
+                    img.onclick = () => toggleEnlarge(img);
+                    if (src.endsWith('.png')) {
+                        img.classList.add('png-image');
+                    }
+                    imagesDiv.appendChild(img);
+                });
+            } else if (brand === 'alfen' && model === 'prolinedubbel') {
+                images.forEach((src, index) => {
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.style.width = "calc(25% - 10px)"; /* Ensure all images have the same size */
+                    img.onclick = () => toggleEnlarge(img);
+                    if (index === 0) {
+                        img.classList.add('large-image-lower'); /* Specific size for first image */
+                    }
+                    imagesDiv.appendChild(img);
+                });
+            } else if (brand === 'istock' && model === 'overig') {
+                featuresDiv.style.display = 'none';
+                images.forEach(src => {
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.classList.add('overig-image'); // Add this line
+                    img.onclick = () => toggleEnlarge(img);
+                    imagesDiv.appendChild(img);
+                });
+            } else {
+                images.forEach((src, index) => {
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.onclick = () => toggleEnlarge(img);
+                    if (src.endsWith('.png')) {
+                        img.classList.add('png-image');
+                    }
+                    if (model === 'go' && index === images.length - 1) {
+                        img.classList.add('no-box');
+                    }
+                    if (brand === 'wallbox') {
+                        imagesDiv.classList.add('wallbox');
+                    } else {
+                        imagesDiv.classList.remove('wallbox');
+                    }
+                    imagesDiv.appendChild(img);
+                });
             }
         }
 
-        function chooseType(type) {
-            if (type === 'zakelijk') {
-                showStep(3);
+        function toggleEnlarge(img) {
+            if (img.classList.contains('enlarged')) {
+                img.classList.remove('enlarged');
             } else {
-                showStep(2);
-            }
-        }
-
-        function chooseSolution(solution) {
-            if (solution === 'zaptec') {
-                showStep(5);
-            } else if (solution === 'wallbox') {
-                showStep(8);
-            } else if (solution === 'alfen') {
-                showStep(11);
-            } else {
-                showStep(14);
-            }
-        }
-
-        function chooseSolutionAfterEflux(solution) {
-            if (solution === 'zaptec') {
-                showStep(5);
-            } else if (solution === 'wallbox') {
-                showStep(8);
-            } else if (solution === 'alfen') {
-                showStep(11);
-            } else {
-                showStep(14);
-            }
-        }
-
-        function chooseZaptecOption(option) {
-            if (option === 'app') {
-                showStep(6);
-            } else {
-                showStep(7);
-            }
-        }
-
-        function chooseWallboxOption(option) {
-            if (option === 'app') {
-                showStep(9);
-            } else {
-                showStep(10);
-            }
-        }
-
-        function chooseAlfenOption(option) {
-            if (option === 'app') {
-                showStep(12);
-            } else {
-                showStep(13);
-            }
-        }
-
-        function chooseLoadBalancingOption(option) {
-            if (option === 'tibber') {
-                showStep(15);
-            } else if (option === 'zaptec') {
-                showStep(15);
-            } else {
-                showStep(18);
-            }
-        }
-
-        function chooseTibberOption(option) {
-            if (option === 'app') {
-                showStep(16);
-            } else {
-                showStep(17);
+                img.classList.add('enlarged');
             }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            showStep(0);
+            const zaptecLogo = document.querySelector('.zaptec-logo');
+            const wallboxLogo = document.querySelector('.wallbox-logo');
+            const alfenLogo = document.querySelector('.alfen-logo');
+            const istockLogo = document.querySelector('.istock-logo');
+
+            zaptecLogo.addEventListener('click', selectBrand);
+            wallboxLogo.addEventListener('click', selectBrand);
+            alfenLogo.addEventListener('click', selectBrand);
+            istockLogo.addEventListener('click', selectBrand);
+
+            window.addEventListener('scroll', () => {
+                const header = document.querySelector('.header');
+                const headerBackgroundColor = window.getComputedStyle(header).backgroundColor;
+                if (window.scrollY > 50) {
+                    header.style.background = headerBackgroundColor.replace('rgb', 'rgba').replace(')', ', 0.4)');
+                    header.classList.add('scrolled');
+                } else {
+                    header.style.background = headerBackgroundColor.replace('rgba', 'rgb').replace(', 0.4)', ')');
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Initially, only show the top bar
+            document.querySelector('.header').style.display = 'flex';
         });
     </script>
 </head>
 <body>
     <div class="header">
         <div class="logo-wrapper">
-            <img src="LogoHSM.png" alt="Logo HSM">
+            <img src="Zaptec-logo-Black.png" alt="Zaptec Logo" class="zaptec-logo logo" data-brand="zaptec">
+            <img src="wallbox-logo.png" alt="Wallbox Logo" class="wallbox-logo logo" data-brand="wallbox">
+            <img src="alfen-logo-descr-wit-hor-01.png" alt="Alfen Logo" class="alfen-logo logo" data-brand="alfen">
         </div>
-        <h1>Voorbereiding voor uw Laadoplossingen</h1>
+        <img src="istockphoto-1431371117-612x612-removebg-preview.png" alt="Main Logo" class="istock-logo logo" data-brand="istock">
     </div>
-
     <div class="container">
-        <section id="intro" class="section">
-            <h2>Welkom bij de Installatiegids</h2>
-            <p>Om een soepele installatie te waarborgen, verzoeken wij u om vooraf de benodigde accounts aan te maken. In de bijgevoegde documentatie vindt u gedetailleerde instructies voor het registreren van accounts en het installeren van de benodigde apps voor uw nieuwe laadoplossingen.</p>
-            <p class="important">Belangrijk:</p>
-            <ul>
-                <li class="important">E-Flux: Controleer uw offerte om te zien of u van E-Flux gebruik maakt. Indien ja, maak dan een E-Flux account aan.</li>
-                <li class="important">Zaptec: Als u een Zaptec laadoplossing heeft, maak dan een account aan bij Zaptec.</li>
-                <li class="important">Tibber: Voor alle installaties is het noodzakelijk een Tibber account aan te maken voor de loadbalancing.</li>
-            </ul>
-            <p>Deze stappen zijn essentieel voor de goede werking van uw laadstations en om alle functionaliteiten optimaal te kunnen benutten.</p>
-            <div class="button-container">
-                <button onclick="nextStep()">Volgende</button>
-            </div>
-        </section>
-
-        <section id="chooseType" class="section" style="display:none;">
-            <h2>Kies Uw Laadpaal</h2>
-            <div class="button-container">
-                <button onclick="chooseType('prive')">Privé</button>
-                <button onclick="chooseType('zakelijk')">Zakelijk</button>
-            </div>
-        </section>
-
-        <section id="chooseSolution" class="section" style="display:none;">
-            <h2>Kies Uw Oplossing</h2>
-            <div class="button-container">
-                <button onclick="chooseSolution('zaptec')">Zaptec</button>
-                <button onclick="chooseSolution('wallbox')">Wallbox</button>
-                <button onclick="chooseSolution('alfen')">Alfen</button>
-                <button onclick="chooseSolution('other')">Overig</button>
-            </div>
-        </section>
-
-        <section id="eflux" class="section steps" style="display:none;">
-            <h3>E-Flux Account Aanmaken</h3>
-            <ol>
-                <li>Open uw webbrowser op uw computer of laptop.</li>
-                <li>Ga naar de aanmeldpagina voor E-Flux via deze link: <a href="https://dashboard.e-flux.io/cpo/signup" target="_blank">https://dashboard.e-flux.io/cpo/signup</a>.</li>
-                <li>Vul de vereiste persoonlijke gegevens in op het formulier en kies een veilig wachtwoord.</li>
-                <li>Lees en accepteer de algemene voorwaarden en de privacyverklaring door de bijbehorende vakjes aan te vinken.</li>
-                <li>Selecteer op het scherm 'Factuuradres' de optie 'Zakelijk' indien de kosten voor het laden door uw bedrijf worden gedragen.</li>
-                <li>Vul de bedrijfsgegevens in, waaronder het btw-nummer en het KVK-nummer.</li>
-                <li>Bevestig uw gegevens door op de knop 'Bevestig' te drukken.</li>
-            </ol>
-            <div class="button-container">
-                <button onclick="nextStep(); showStep(4);">Volgende</button>
-            </div>
-        </section>
-
-        <section id="chooseSolutionAfterEflux" class="section" style="display:none;">
-            <h2>Kies Uw Oplossing</h2>
-            <div class="button-container">
-                <button onclick="chooseSolutionAfterEflux('zaptec')">Zaptec</button>
-                <button onclick="chooseSolutionAfterEflux('wallbox')">Wallbox</button>
-                <button onclick="chooseSolutionAfterEflux('alfen')">Alfen</button>
-                <button onclick="chooseSolutionAfterEflux('other')">Overig</button>
-            </div>
-        </section>
-
-        <section id="zaptecOptions" class="section" style="display:none;">
-            <h2>Kies een Optie voor Zaptec</h2>
-            <div class="button-container">
-                <button onclick="chooseZaptecOption('app')">Zaptec App Downloaden</button>
-                <button onclick="chooseZaptecOption('account')">Zaptec Account Aanmaken</button>
-            </div>
-        </section>
-
-        <section id="zaptecAppDownload" class="section steps" style="display:none;">
-            <h3>Zaptec App Downloaden</h3>
-            <ol>
-                <li>Open de App Store (voor iOS-apparaten) of de Google Play Store (voor Android-apparaten) op uw mobiele telefoon.</li>
-                <li>Voer in de zoekbalk het woord “Zaptec” in.</li>
-                <li>Selecteer de app met de naam "Zaptec" en druk op de "installeren" knop om de app op uw mobiel te installeren.</li>
-            </ol>
-            <div class="image-container">
-                <img src="ZaptecApp1.jpg" alt="Zaptec App Screenshot 1">
-                <img src="ZaptecApp2.jpg" alt="Zaptec App Screenshot 2">
-            </div>
-            <div class="button-container">
-                <button onclick="showStep(7)">Volgende</button>
-            </div>
-        </section>
-
-        <section id="zaptecAccount" class="section steps" style="display:none;">
-            <h3>Zaptec Account Aanmaken</h3>
-            <ol>
-                <li>Open de Zaptec app op uw mobiele apparaat.</li>
-                <li>Tik op de knop “Aanmelden”.</li>
-                <li>Voer uw gegevens in en kies een wachtwoord. Vink het vakje aan bij “Ik ga akkoord met de gebruikersvoorwaarden”.</li>
-                <li>Klik op “Account aanmaken”. U ontvangt een bevestigingsmail met een link om uw account definitief te activeren.</li>
-                <li>Activeer uw account via de link in de ontvangen e-mail.</li>
-                <li>Na activatie kunt u terugkeren naar de app en inloggen met het e-mailadres en wachtwoord dat u heeft ingesteld.</li>
-            </ol>
-            <div class="image-container">
-                <img src="ZaptecAccount1.jpg" alt="Zaptec Account Screenshot 1">
-                <img src="ZaptecAccount2.jpg" alt="Zaptec Account Screenshot 2">
-                <img src="ZaptecAccount3.jpg" alt="Zaptec Account Screenshot 3">
-            </div>
-            <div class="button-container">
-                <button onclick="showStep(14)">Volgende</button>
-            </div>
-        </section>
-
-        <section id="wallboxOptions" class="section" style="display:none;">
-            <h2>Kies een Optie voor Wallbox</h2>
-            <div class="button-container">
-                <button onclick="chooseWallboxOption('app')">Wallbox App Downloaden</button>
-                <button onclick="chooseWallboxOption('account')">Wallbox Account Aanmaken</button>
-            </div>
-        </section>
-
-        <section id="wallboxAppDownload" class="section steps" style="display:none;">
-            <h3>Wallbox App Downloaden</h3>
-            <ol>
-                <li>Open de App Store (voor iOS-apparaten) of de Google Play Store (voor Android-apparaten) op uw mobiele telefoon.</li>
-                <li>Voer in de zoekbalk het woord “Wallbox” in.</li>
-                <li>Selecteer de app met de naam "Wallbox" en druk op de "installeren" knop om de app op uw mobiel te installeren.</li>
-            </ol>
-            <div class="button-container">
-                <button onclick="showStep(10)">Volgende</button>
-            </div>
-        </section>
-
-        <section id="wallboxAccount" class="section steps" style="display:none;">
-            <h3>Wallbox Account Aanmaken</h3>
-            <ol>
-                <li>Open de Wallbox app op uw mobiele apparaat.</li>
-                <li>Tik op de knop “Aanmelden”.</li>
-                <li>Voer uw gegevens in en kies een wachtwoord. Vink het vakje aan bij “Ik ga akkoord met de gebruikersvoorwaarden”.</li>
-                <li>Klik op “Account aanmaken”. U ontvangt een bevestigingsmail met een link om uw account definitief te activeren.</li>
-                <li>Activeer uw account via de link in de ontvangen e-mail.</li>
-                <li>Na activatie kunt u terugkeren naar de app en inloggen met het e-mailadres en wachtwoord dat u heeft ingesteld.</li>
-            </ol>
-            <div class="button-container">
-                <button onclick="showStep(14)">Volgende</button>
-            </div>
-        </section>
-
-        <section id="alfenOptions" class="section" style="display:none;">
-            <h2>Kies een Optie voor Alfen</h2>
-            <div class="button-container">
-                <button onclick="chooseAlfenOption('app')">Alfen App Downloaden</button>
-                <button onclick="chooseAlfenOption('account')">Alfen Account Aanmaken</button>
-            </div>
-        </section>
-
-        <section id="alfenAppDownload" class="section steps" style="display:none;">
-            <h3>Alfen App Downloaden</h3>
-            <ol>
-                <li>Open de App Store (voor iOS-apparaten) of de Google Play Store (voor Android-apparaten) op uw mobiele telefoon.</li>
-                <li>Voer in de zoekbalk het woord “Alfen” in.</li>
-                <li>Selecteer de app met de naam "Alfen" en druk op de "installeren" knop om de app op uw mobiel te installeren.</li>
-            </ol>
-            <div class="button-container">
-                <button onclick="showStep(13)">Volgende</button>
-            </div>
-        </section>
-
-        <section id="alfenAccount" class="section steps" style="display:none;">
-            <h3>Alfen Account Aanmaken</h3>
-            <ol>
-                <li>Open de Alfen app op uw mobiele apparaat.</li>
-                <li>Tik op de knop “Aanmelden”.</li>
-                <li>Voer uw gegevens in en kies een wachtwoord. Vink het vakje aan bij “Ik ga akkoord met de gebruikersvoorwaarden”.</li>
-                <li>Klik op “Account aanmaken”. U ontvangt een bevestigingsmail met een link om uw account definitief te activeren.</li>
-                <li>Activeer uw account via de link in de ontvangen e-mail.</li>
-                <li>Na activatie kunt u terugkeren naar de app en inloggen met het e-mailadres en wachtwoord dat u heeft ingesteld.</li>
-            </ol>
-            <div class="button-container">
-                <button onclick="showStep(14)">Volgende</button>
-            </div>
-        </section>
-
-        <section id="loadBalancing" class="section" style="display:none;">
-            <h2>Kies Loadbalancing Optie</h2>
-            <div class="button-container">
-                <button onclick="chooseLoadBalancingOption('tibber')">Tibber</button>
-                <button onclick="chooseLoadBalancingOption('zaptec')">Zaptec</button>
-            </div>
-        </section>
-
-        <section id="chooseTibberOption" class="section" style="display:none;">
-            <h2>Kies een Optie voor Tibber</h2>
-            <div class="button-container">
-                <button onclick="chooseTibberOption('app')">Tibber App Downloaden</button>
-                <button onclick="chooseTibberOption('account')">Tibber Account Aanmaken</button>
-            </div>
-        </section>
-
-        <section id="tibberApp" class="section steps" style="display:none;">
-            <h3>Tibber App Downloaden</h3>
-            <ol>
-                <li>Open de App Store (voor iOS-apparaten) of de Google Play Store (voor Android-apparaten) op uw mobiele toestel.</li>
-                <li>Typ “Tibber” in de zoekbalk.</li>
-                <li>Zoek naar "Tibber – Slimme energie".</li>
-                <li>Tik op de app en druk vervolgens op de "installeren" knop om de app op uw toestel te installeren.</li>
-            </ol>
-            <div class="image-container">
-                <img src="TibberApp1.jpg" alt="Tibber App Screenshot 1">
-            </div>
-            <div class="button-container">
-                <button onclick="showStep(17)">Volgende</button>
-            </div>
-        </section>
-
-        <section id="tibberAccount" class="section steps" style="display:none;">
-            <h3>Tibber Account Aanmaken</h3>
-            <ol>
-                <li>Start de Tibber app op uw mobiele apparaat.</li>
-                <li>Blader door de introductieslides voor een kort overzicht van de app of druk op “Overslaan” om direct naar de registratie te gaan.</li>
-                <li>Klik op “Maak een account aan”.</li>
-                <li>Voer uw e-mailadres in en kies een wachtwoord.</li>
-                <li>U ontvangt een e-mail met een verificatiecode. Voer deze code in binnen de app.</li>
-                <li>Vervolg met het doorlopen van de introductieslides en voer waar nodig uw persoonlijke gegevens in.</li>
-                <li>Bij het scherm “Create your home profile for tailored insights” kunt u kiezen voor “Do it later” als u dit later wilt configureren.</li>
-            </ol>
-            <div class="image-container">
-                <img src="TibberAccount1.jpg" alt="Tibber Account Screenshot 1">
-                <img src="TibberAccount2.jpg" alt="Tibber Account Screenshot 2">
-            </div>
-            <p>Ondersteuning bij installatie: De installateur zal u begeleiden bij het koppelen van de Tibber Pulse met uw app.</p>
-            <div class="button-container">
-                <button onclick="showStep(18)">Volgende</button>
-            </div>
-        </section>
-
-        <section id="contact" class="section" style="display:none;">
-            <h3>Contact en Ondersteuning</h3>
-            <p>Heeft u nog vragen? Neem dan contact met ons op. Wij helpen u graag verder.</p>
-            <p>We zien u graag tijdens de installatie.</p>
-            <div class="button-container">
-                <button onclick="location.reload()">Opnieuw Beginnen</button>
-            </div>
-        </section>
-
-        <div id="backButton" class="back-button" style="display: none;">
-            <button onclick="previousStep()">Terug</button>
-        </div>
-    </div>
-
-    <div class="footer">
-        <div class="contact-info">
-            <div>
-                <strong>Adres</strong><br>
-                Plantijnweg 31<br>
-                4104 BC Culemborg
-            </div>
-            <div>
-                <strong>Telefoon</strong><br>
-                0345 - 51 66 13
-            </div>
-            <div>
-                <strong>E-mail</strong><br>
-                <a href="mailto:contact@henkscholtenmobility.nl">contact@henkscholtenmobility.nl</a>
-            </div>
-            <div>
-                <strong>Website</strong><br>
-                <a href="https://henkscholtenmobility.nl">henkscholtenmobility.nl</a>
-            </div>
-            <div>
-                <strong>KvK nr.</strong><br>
-                11019215
-            </div>
-            <div>
-                <strong>BTW nr.</strong><br>
-                NL 0087 06 165 B01
-            </div>
+        <div class="models"></div>
+        <div class="features"></div>
+        <div class="large-image-container"></div>
+        <div class="images"></div>
+        <div class="footer">
+            <img src="Picture1.png" alt="Henk Scholten Logo">
         </div>
     </div>
 </body>
