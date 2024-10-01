@@ -23,7 +23,9 @@
             display: none; /* Initially hide the container */
         }
         .header {
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Center the brand logos */
             position: fixed;
             top: 0;
             left: 0;
@@ -33,31 +35,38 @@
             color: #333;
             border-radius: 0 0 10px 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             transition: background 0.5s, padding 0.3s;
             z-index: 1000;
             height: 80px;
         }
+        .istock-logo {
+            position: absolute;
+            left: 20px;
+            max-height: 80px;
+            cursor: pointer;
+        }
         .header .logo-wrapper {
             display: flex;
+            align-items: center;
+            justify-content: center; /* Center the brand logos */
             gap: 30px;
-            margin: 0 auto;
         }
-        .header.scrolled {
-            background-color: rgba(220, 220, 220, 0.4); /* Light grey color */
-            backdrop-filter: blur(10px);
-        }
-        .header img {
-            max-height: 100%;
-            max-width: 200px;
+        .header .logo-wrapper img {
+            max-height: 70px; /* Adjusted size */
+            width: auto;
             cursor: pointer;
             transition: opacity 0.6s, transform 1.2s;
             object-fit: contain;
         }
         .header img:hover {
             transform: scale(1.1);
+        }
+        /* Increase size for specific logos */
+        .zaptec-logo {
+            max-height: 90px; /* Increased size for Zaptec logo */
+        }
+        .volvo-logo {
+            max-height: 90px; /* Increased size for Volvo logo */
         }
         .logo {
             transition: transform 1.2s, opacity 0.6s;
@@ -72,9 +81,6 @@
         }
         .centered {
             transform: translateX(-50%) scale(1.2);
-        }
-        .istock-logo {
-            margin-right: 40px; /* Adjust this value to change the distance from the side */
         }
         .models, .features, .images, .large-image-container, .footer {
             display: none;
@@ -174,28 +180,6 @@
             transition: transform 0.3s, z-index 0.3s;
             cursor: pointer;
         }
-        .product-info {
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin: 10px 0; /* Reduced margin */
-        }
-        .product-info h2 {
-            font-size: 2em;
-            margin-bottom: 20px;
-        }
-        .product-info p {
-            font-size: 1.2em;
-            margin-bottom: 10px;
-        }
-        .product-info ul {
-            list-style-type: disc;
-            padding-left: 20px;
-        }
-        .product-info ul li {
-            margin-bottom: 10px;
-        }
         .footer {
             text-align: center;
             padding: 20px;
@@ -222,9 +206,8 @@
         .overig-image {
             width: 500px !important; /* Ensure fixed width */
             height: 300px !important; /* Ensure fixed height */
-            object-fit: cover; /* Optional: make sure the image covers the given dimensions */
+            object-fit: cover; /* Ensure the image covers the given dimensions */
         }
-
         /* Media Queries for Mobile Responsiveness */
         @media (max-width: 768px) {
             .header {
@@ -235,8 +218,13 @@
             .header .logo-wrapper {
                 gap: 10px;
             }
-            .header img {
-                max-width: 150px;
+            .header .logo-wrapper img,
+            .istock-logo {
+                max-height: 50px; /* Adjusted for mobile */
+            }
+            .istock-logo {
+                position: static;
+                margin-bottom: 10px;
             }
             .models button {
                 padding: 10px 20px;
@@ -302,11 +290,19 @@
                     { icon: "Kabel.png", text: "Dubbele socket" }
                 ]
             },
+            volvo: {
+                default: [
+                    { icon: "22kw.png", text: "22 kW (Installatie op 11kW)" },
+                    { icon: "Loadbalancing.png", text: "Load balancing" },
+                    { icon: "eflux.png", text: "Privé" },
+                    { icon: "Kabel.png", text: "Socket" }
+                ]
+            },
             istock: {
-                paal: [],  // No features for Paal
-                overig: [],  // No features for Overig
-                loadbalancing: [],  // No features for Loadbalancing
-                team: []  // No features for Team
+                paal: [],
+                overig: [],
+                loadbalancing: [],
+                team: []
             }
         };
 
@@ -348,6 +344,14 @@
                     "1685632011914.jpeg"
                 ]
             },
+            volvo: {
+                default: [
+                    "0000c8af_80_5c_8c_4a.jpg",
+                    "0000c8af_80_5c_8c_8b.jpg",
+                    "4x3_wallbox_selected_w_mid_socket_charging_side.avif",
+                    "4x3_wallbox_selected_w_mid_socket_Closeup.avif"
+                ]
+            },
             istock: {
                 paal: [
                     "WhatsApp Image 2024-07-09 at 10.37.50_b06ef449.jpg",
@@ -376,11 +380,12 @@
             const wallboxLogo = document.querySelector('.wallbox-logo');
             const alfenLogo = document.querySelector('.alfen-logo');
             const istockLogo = document.querySelector('.istock-logo');
-            const container = document.querySelector('.container'); // Get the container
-            const featuresDiv = document.querySelector('.features'); // Get the features div
-            const imagesDiv = document.querySelector('.images'); // Get the images div
-            const largeImageDiv = document.querySelector('.large-image-container'); // Get the large image div
-            const footerDiv = document.querySelector('.footer'); // Get the footer div
+            const volvoLogo = document.querySelector('.volvo-logo');
+            const container = document.querySelector('.container');
+            const featuresDiv = document.querySelector('.features');
+            const imagesDiv = document.querySelector('.images');
+            const largeImageDiv = document.querySelector('.large-image-container');
+            const footerDiv = document.querySelector('.footer');
 
             // Initially hide all sections
             modelsDiv.style.display = 'none';
@@ -397,11 +402,13 @@
             wallboxLogo.classList.remove('centered', 'active');
             alfenLogo.classList.remove('centered', 'active');
             istockLogo.classList.remove('centered', 'active');
+            volvoLogo && volvoLogo.classList.remove('centered', 'active');
 
             zaptecLogo.classList.add('inactive');
             wallboxLogo.classList.add('inactive');
             alfenLogo.classList.add('inactive');
             istockLogo.classList.add('inactive');
+            volvoLogo && volvoLogo.classList.add('inactive');
 
             let headerColor;
             if (brand === 'zaptec') {
@@ -441,6 +448,14 @@
                     <button data-model="overig" onclick="selectModel(event, '${brand}')">Overig</button>
                     <button data-model="loadbalancing" onclick="selectModel(event, '${brand}')">Loadbalancing</button>
                     <button data-model="team" onclick="selectModel(event, '${brand}')">Team</button>
+                `;
+            } else if (brand === 'volvo') {
+                volvoLogo.classList.add('centered', 'active');
+                volvoLogo.classList.remove('inactive');
+                headerColor = '#cccccc';  // Set a light color for Volvo
+                header.style.background = headerColor;
+                modelsDiv.innerHTML = `
+                    <button data-model="default" onclick="selectModel(event, '${brand}')">Standard</button>
                 `;
             }
             const buttons = modelsDiv.querySelectorAll('button');
@@ -482,7 +497,7 @@
                 featuresDiv.appendChild(featureDiv);
             });
 
-            const images = imagesData[brand][model] || imagesData[brand].default;
+            const images = imagesData[brand][model] || imagesData[brand].default || [];
 
             if (brand === 'zaptec' && model === 'go') {
                 images.forEach((src, index) => {
@@ -503,7 +518,7 @@
                 const firstImg = document.createElement('img');
                 firstImg.src = images[0];
                 firstImg.classList.add('large-image');
-                firstImg.classList.add('no-box');  // Add this line to remove box-shadow from large image
+                firstImg.classList.add('no-box');  // Remove box-shadow from large image
                 firstImg.onclick = () => toggleEnlarge(firstImg);
                 imagesDiv.appendChild(firstImg); // Append the first image last
                 imagesDiv.insertBefore(imagesDiv.lastChild, imagesDiv.firstChild); // Move the last image to the first position
@@ -545,7 +560,7 @@
                 images.forEach(src => {
                     const img = document.createElement('img');
                     img.src = src;
-                    img.classList.add('overig-image'); // Add this line
+                    img.classList.add('overig-image');
                     img.onclick = () => toggleEnlarge(img);
                     imagesDiv.appendChild(img);
                 });
@@ -571,11 +586,7 @@
         }
 
         function toggleEnlarge(img) {
-            if (img.classList.contains('enlarged')) {
-                img.classList.remove('enlarged');
-            } else {
-                img.classList.add('enlarged');
-            }
+            img.classList.toggle('enlarged');
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -583,11 +594,13 @@
             const wallboxLogo = document.querySelector('.wallbox-logo');
             const alfenLogo = document.querySelector('.alfen-logo');
             const istockLogo = document.querySelector('.istock-logo');
+            const volvoLogo = document.querySelector('.volvo-logo');
 
             zaptecLogo.addEventListener('click', selectBrand);
             wallboxLogo.addEventListener('click', selectBrand);
             alfenLogo.addEventListener('click', selectBrand);
             istockLogo.addEventListener('click', selectBrand);
+            volvoLogo.addEventListener('click', selectBrand);
 
             window.addEventListener('scroll', () => {
                 const header = document.querySelector('.header');
@@ -608,18 +621,19 @@
 </head>
 <body>
     <div class="header">
+        <img src="istockphoto-1431371117-612x612-removebg-preview.png" alt="Main Logo" class="istock-logo logo" data-brand="istock">
         <div class="logo-wrapper">
             <img src="Zaptec-logo-Black.png" alt="Zaptec Logo" class="zaptec-logo logo" data-brand="zaptec">
             <img src="wallbox-logo.png" alt="Wallbox Logo" class="wallbox-logo logo" data-brand="wallbox">
             <img src="alfen-logo-descr-wit-hor-01.png" alt="Alfen Logo" class="alfen-logo logo" data-brand="alfen">
+            <img src="Volvo-Logo.png" alt="Volvo Logo" class="volvo-logo logo" data-brand="volvo">
         </div>
-        <img src="istockphoto-1431371117-612x612-removebg-preview.png" alt="Main Logo" class="istock-logo logo" data-brand="istock">
     </div>
     <div class="container">
         <div class="models"></div>
         <div class="features"></div>
         <div class="large-image-container"></div>
-        <div class="images"></div>
+        <div class="images volvo"></div>
         <div class="footer">
             <img src="Picture1.png" alt="Henk Scholten Logo">
         </div>
