@@ -181,21 +181,25 @@
             cursor: pointer;
         }
         .footer {
-            text-align: center;
-            padding: 20px;
-            background: linear-gradient(to bottom, #666, #888);
-            margin: 10px 0; /* Reduced margin */
-            border-radius: 10px;
-            color: #fff;
-        }
-        .footer img {
-            max-width: 200px;
-            margin-top: 10px;
-        }
-        .footer p {
-            margin: 5px 0;
-            font-size: 1.2em;
-        }
+    width: 100vw; /* Make the footer full width */
+    position: relative; /* Position it relative to the viewport */
+    left: 50%; /* Adjust alignment */
+    transform: translateX(-50%); /* Center align it */
+    padding: 20px;
+    background: linear-gradient(to bottom, #666, #888);
+    color: #fff;
+    text-align: center;
+}
+
+.footer img {
+    max-width: 200px;
+    margin-top: 10px;
+}
+
+.footer p {
+    margin: 5px 0;
+    font-size: 1.2em;
+}
         .enlarged {
             transform: scale(2);
             z-index: 10;
