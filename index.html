@@ -15,82 +15,67 @@
             padding: 0;
             overflow-x: hidden;
         }
+
         .container {
             max-width: 1300px;
             margin: 0 auto;
             padding: 20px;
             padding-top: 95px;
-            display: none; /* Initially hide the container */
+            display: none;
         }
+
         .header {
             display: flex;
             align-items: center;
-            justify-content: center; /* Center the brand logos */
+            justify-content: center;
             position: fixed;
             top: 0;
-            left: 0;
             width: 100%;
-            background: #dcdcdc; /* Light grey color */
+            background: #dcdcdc;
             padding: 10px 20px;
             color: #333;
-            border-radius: 0 0 10px 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            transition: background 0.5s, padding 0.3s, height 0.3s;
             z-index: 1000;
             height: 80px;
         }
+
         .istock-logo {
             position: absolute;
             left: 20px;
             max-height: 80px;
             cursor: pointer;
         }
+
         .header .logo-wrapper {
             display: flex;
             align-items: center;
-            justify-content: center; /* Center the brand logos */
             gap: 30px;
         }
+
         .header .logo-wrapper img {
-            max-height: 70px; /* Adjusted size */
-            width: auto;
+            max-height: 70px;
             cursor: pointer;
-            transition: opacity 0.6s, transform 1.2s;
-            object-fit: contain;
+            transition: opacity 0.6s, transform 0.5s;
         }
+
         .header img:hover {
             transform: scale(1.1);
         }
-        /* Increase size for specific logos */
-        .zaptec-logo {
-            max-height: 90px; /* Increased size for Zaptec logo */
-        }
-        .volvo-logo {
-            max-height: 90px; /* Increased size for Volvo logo */
-        }
-        .logo {
-            transition: transform 1.2s, opacity 0.6s;
-        }
+
         .logo.active {
             opacity: 1;
-            transform: translateX(0);
         }
+
         .logo.inactive {
             opacity: 0.5;
-            transform: translateX(0);
         }
-        .centered {
-            transform: translateX(-50%) scale(1.2);
-        }
-        .models, .features, .images, .large-image-container, .footer {
-            display: none;
-        }
+
         .models {
             text-align: center;
             margin-top: 10px;
-            margin-bottom: 10px; /* Reduced margin-bottom */
-            padding: 10px 0; /* Ensure consistent spacing */
+            margin-bottom: 20px;
         }
+
         .models button {
             margin: 5px;
             padding: 10px 50px;
@@ -103,154 +88,141 @@
             transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
+
         .models button:hover {
             background: #005bb5;
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
+
         .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-        .feature {
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        .feature:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-        }
-        .feature img {
-            max-width: 80px;
-            margin-bottom: 10px;
-        }
-        .feature p {
-            font-size: 16px;
-            margin: 0;
-        }
-        .images {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 15px;
             margin: 20px 0;
         }
-        .images img {
-            width: 100%;
-            height: auto;
+
+        .feature {
+            background: #fff;
+            padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            object-fit: cover;
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+
+        .feature:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature img {
+            max-width: 60px;
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .images {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .images img {
+            width: calc(25% - 10px);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
         .images img:hover {
             transform: scale(1.05);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
         }
-        .images img.png-image {
-            background-color: #fff;
-            border: none;
-            padding: 0;
-            border-radius: 10px;
-        }
-        .images.wallbox img:last-child {
-            width: calc(50% - 10px);
-        }
-        .images.wallbox img.no-box {
-            box-shadow: none;
-        }
+
         .large-image-container {
             display: flex;
             justify-content: center;
             margin: 20px 0;
         }
+
         .large-image {
             width: 90%;
-            height: auto;
-            object-fit: cover;
             border-radius: 10px;
-            box-shadow: none;
-            transition: transform 0.3s, z-index 0.3s;
             cursor: pointer;
         }
+
         .footer {
-            text-align: center;
-            padding: 20px;
-            background: linear-gradient(to right, #0066cc, #0099ff);
-            margin: 0;
-            border-radius: 0;
-            color: #fff;
             width: 100%;
-            position: relative;
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(90deg, #666, #888);
+            color: #fff;
         }
+
         .footer img {
-            max-width: 100%;
-            height: auto;
+            max-width: 200px;
             margin-top: 10px;
         }
+
         .footer p {
             margin: 5px 0;
             font-size: 1.2em;
         }
+
         .enlarged {
             transform: scale(2);
             z-index: 10;
         }
-        .large-image-lower {
-            width: 50% !important;
-        }
-        .overig-image {
-            width: 500px !important;
-            height: 300px !important;
-            object-fit: cover;
-        }
-        /* Media Queries for Mobile Responsiveness */
+
+        /* Mobile Responsiveness */
         @media (max-width: 768px) {
             .header {
                 flex-direction: column;
-                height: auto;
                 padding: 20px 10px;
             }
+
             .header .logo-wrapper {
                 gap: 10px;
             }
+
             .header .logo-wrapper img,
             .istock-logo {
                 max-height: 50px;
             }
-            .istock-logo {
-                position: static;
-                margin-bottom: 10px;
-            }
+
             .models button {
                 padding: 10px 20px;
                 font-size: 0.9em;
             }
+
             .feature {
                 padding: 10px;
             }
+
             .features {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
                 gap: 10px;
             }
+
             .images img {
-                width: 100%;
+                width: calc(50% - 10px);
             }
+
             .large-image {
                 width: 100%;
             }
         }
     </style>
+    
     <script>
         const featuresData = {
             zaptec: {
